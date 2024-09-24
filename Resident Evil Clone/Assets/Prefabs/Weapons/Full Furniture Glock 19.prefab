@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1003658673859421084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4599693024823426338}
+  m_Layer: 0
+  m_Name: Fire Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4599693024823426338
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003658673859421084}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0033, z: 0.000628}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1753441477631779494}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1317536568398492906
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +43,7 @@ GameObject:
   - component: {fileID: 7066902629923363635}
   - component: {fileID: 4012055033517634655}
   m_Layer: 0
-  m_Name: CustomPistol9mm.009
+  m_Name: Extractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +62,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1753441477631779494}
+  m_Father: {fileID: 9159554647881104654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7066902629923363635
 MeshFilter:
@@ -95,7 +126,7 @@ GameObject:
   - component: {fileID: 6552555242300605219}
   - component: {fileID: 3364340383452860804}
   m_Layer: 0
-  m_Name: CustomPistol9mm.019
+  m_Name: Slide Release
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,7 +228,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1753441477631779494}
+  m_Father: {fileID: 9159554647881104654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3316501108193036318
 MeshFilter:
@@ -261,7 +292,7 @@ GameObject:
   - component: {fileID: 4181788876216026072}
   - component: {fileID: 4157488774588618614}
   m_Layer: 0
-  m_Name: CustomPistol9mm
+  m_Name: Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -279,7 +310,13 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1711053316112722282}
+  - {fileID: 2983011545690210887}
+  - {fileID: 8051510328210586496}
+  - {fileID: 5573061069065273003}
+  - {fileID: 5913900033109567681}
+  - {fileID: 6583490418926033207}
   m_Father: {fileID: 1753441477631779494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4181788876216026072
@@ -344,7 +381,7 @@ GameObject:
   - component: {fileID: 2239703443746483096}
   - component: {fileID: 8969799284203304536}
   m_Layer: 0
-  m_Name: CustomPistol9mm.001
+  m_Name: Guiderod
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,7 +464,7 @@ GameObject:
   - component: {fileID: 1235347743989449174}
   - component: {fileID: 4797167163988976224}
   m_Layer: 0
-  m_Name: CustomPistol9mm.010
+  m_Name: Takedown Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,7 +547,7 @@ GameObject:
   - component: {fileID: 4614424500922053246}
   - component: {fileID: 6897964901631405143}
   m_Layer: 0
-  m_Name: CustomPistol9mm.016
+  m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -593,7 +630,7 @@ GameObject:
   - component: {fileID: 4605696539713541420}
   - component: {fileID: 6431629966197632143}
   m_Layer: 0
-  m_Name: CustomPistol9mm.014
+  m_Name: Trigger Guard Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -676,7 +713,7 @@ GameObject:
   - component: {fileID: 1994528265972954405}
   - component: {fileID: 4561620069207747481}
   m_Layer: 0
-  m_Name: CustomPistol9mm.015
+  m_Name: Trigger Guard Bottom Edge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -759,7 +796,7 @@ GameObject:
   - component: {fileID: 726958629910789031}
   - component: {fileID: 4334129467846376118}
   m_Layer: 0
-  m_Name: CustomPistol9mm.008
+  m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -778,7 +815,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1753441477631779494}
+  m_Father: {fileID: 9159554647881104654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &726958629910789031
 MeshFilter:
@@ -842,7 +879,7 @@ GameObject:
   - component: {fileID: 911727206048113961}
   - component: {fileID: 6982290158982763558}
   m_Layer: 0
-  m_Name: CustomPistol9mm.011
+  m_Name: Guide Rails
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -925,7 +962,7 @@ GameObject:
   - component: {fileID: 4173885585153779587}
   - component: {fileID: 5989110679547902832}
   m_Layer: 0
-  m_Name: CustomPistol9mm.007
+  m_Name: Rear Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -944,7 +981,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1753441477631779494}
+  m_Father: {fileID: 9159554647881104654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4173885585153779587
 MeshFilter:
@@ -1174,7 +1211,7 @@ GameObject:
   - component: {fileID: 2789713783369645165}
   - component: {fileID: 4327954654417899039}
   m_Layer: 0
-  m_Name: CustomPistol9mm.012
+  m_Name: Back Plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1193,7 +1230,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1753441477631779494}
+  m_Father: {fileID: 9159554647881104654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2789713783369645165
 MeshFilter:
@@ -1257,7 +1294,7 @@ GameObject:
   - component: {fileID: 3435876536383695494}
   - component: {fileID: 3157045935023918918}
   m_Layer: 0
-  m_Name: CustomPistol9mm.004
+  m_Name: Mag Release Backside
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1340,7 +1377,7 @@ GameObject:
   - component: {fileID: 843189743472297172}
   - component: {fileID: 161923075403818046}
   m_Layer: 0
-  m_Name: CustomPistol9mm.020
+  m_Name: Mag Release
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1505,6 +1542,7 @@ GameObject:
   - component: {fileID: 1753441477631779494}
   - component: {fileID: 497766209024167896}
   - component: {fileID: 7331627098247928451}
+  - component: {fileID: 7689362162458584509}
   m_Layer: 0
   m_Name: Full Furniture Glock 19
   m_TagString: Untagged
@@ -1531,19 +1569,13 @@ Transform:
   - {fileID: 8855324933281070821}
   - {fileID: 2472016748253390077}
   - {fileID: 7857040028240849310}
-  - {fileID: 1711053316112722282}
-  - {fileID: 2983011545690210887}
-  - {fileID: 8051510328210586496}
-  - {fileID: 5913900033109567681}
   - {fileID: 6312200297252578842}
   - {fileID: 3404424306133728891}
-  - {fileID: 5573061069065273003}
   - {fileID: 7079064504698682055}
   - {fileID: 5239997483977640183}
   - {fileID: 6022433478534542974}
   - {fileID: 4690306577199799331}
   - {fileID: 6639442490212429443}
-  - {fileID: 6583490418926033207}
   - {fileID: 3095107342756408647}
   - {fileID: 4696789546078591269}
   - {fileID: 6548834677236346567}
@@ -1553,6 +1585,7 @@ Transform:
   - {fileID: 1033366853596553632}
   - {fileID: 1953746706713596000}
   - {fileID: 7559948232806001014}
+  - {fileID: 4599693024823426338}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &497766209024167896
@@ -1605,6 +1638,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7689362162458584509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094597732539293799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12958c13abc90644870c380a7211419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoCapacity: 19
+  currentLoadedAmmo: 15
+  currentSpareAmmo: 19
+  canFire: 1
+  firePoint: {fileID: 4599693024823426338}
 --- !u!1 &8588311622914842083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1617,7 +1667,7 @@ GameObject:
   - component: {fileID: 7205463920371808091}
   - component: {fileID: 573799669298695727}
   m_Layer: 0
-  m_Name: CustomPistol9mm.006
+  m_Name: Front Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1636,7 +1686,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1753441477631779494}
+  m_Father: {fileID: 9159554647881104654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7205463920371808091
 MeshFilter:
@@ -1866,7 +1916,7 @@ GameObject:
   - component: {fileID: 6499237507919484952}
   - component: {fileID: 5078332740893682114}
   m_Layer: 0
-  m_Name: CustomPistol9mm.017
+  m_Name: Trigger Safety
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1945,6 +1995,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1753441477631779494}
     m_Modifications:
+    - target: {fileID: 2592262109256599254, guid: 9baab8c9af072804bbbc46a1aad12907,
+        type: 3}
+      propertyPath: m_Name
+      value: Barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999252437435214614, guid: 9baab8c9af072804bbbc46a1aad12907,
+        type: 3}
+      propertyPath: m_Name
+      value: Switch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474577711720150080, guid: 9baab8c9af072804bbbc46a1aad12907,
+        type: 3}
+      propertyPath: m_Name
+      value: Lens
+      objectReference: {fileID: 0}
     - target: {fileID: 7780940345562129894, guid: 9baab8c9af072804bbbc46a1aad12907,
         type: 3}
       propertyPath: m_Name
@@ -2099,10 +2164,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2285787308188380930, guid: c3375b407698a6b4587b6b0ef2355d1d,
+        type: 3}
+      propertyPath: m_Name
+      value: Threaded Post
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782804557062716045, guid: c3375b407698a6b4587b6b0ef2355d1d,
+        type: 3}
+      propertyPath: m_Name
+      value: Lens
+      objectReference: {fileID: 0}
     - target: {fileID: 5832877604004778556, guid: c3375b407698a6b4587b6b0ef2355d1d,
         type: 3}
       propertyPath: m_Name
       value: Laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 5891612055326358117, guid: c3375b407698a6b4587b6b0ef2355d1d,
+        type: 3}
+      propertyPath: m_Name
+      value: Front Screws
+      objectReference: {fileID: 0}
+    - target: {fileID: 6699846642122836170, guid: c3375b407698a6b4587b6b0ef2355d1d,
+        type: 3}
+      propertyPath: m_Name
+      value: Battery Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030276103033035766, guid: c3375b407698a6b4587b6b0ef2355d1d,
+        type: 3}
+      propertyPath: m_Name
+      value: Rail Clamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674391711883760052, guid: c3375b407698a6b4587b6b0ef2355d1d,
+        type: 3}
+      propertyPath: m_Name
+      value: Switch
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017175317409132670, guid: c3375b407698a6b4587b6b0ef2355d1d,
+        type: 3}
+      propertyPath: m_Name
+      value: Body
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2277,10 +2377,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 834882483473073934, guid: ba7fac59e8d1a2e47989961fb0f59047,
+        type: 3}
+      propertyPath: m_Name
+      value: Can
+      objectReference: {fileID: 0}
     - target: {fileID: 4941168164225966033, guid: ba7fac59e8d1a2e47989961fb0f59047,
         type: 3}
       propertyPath: m_Name
-      value: Supressor1
+      value: Supressor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2301,10 +2406,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1753441477631779494}
     m_Modifications:
+    - target: {fileID: 116395645312399444, guid: b9ba43bb56841124893dba192138c452,
+        type: 3}
+      propertyPath: m_Name
+      value: Ramp
+      objectReference: {fileID: 0}
     - target: {fileID: 901671005472458347, guid: b9ba43bb56841124893dba192138c452,
         type: 3}
       propertyPath: m_Name
       value: Magazine9mm
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103472612444809362, guid: b9ba43bb56841124893dba192138c452,
+        type: 3}
+      propertyPath: m_Name
+      value: Plate
+      objectReference: {fileID: 0}
+    - target: {fileID: 6881753678221578890, guid: b9ba43bb56841124893dba192138c452,
+        type: 3}
+      propertyPath: m_Name
+      value: Top
       objectReference: {fileID: 0}
     - target: {fileID: 8905970591604706563, guid: b9ba43bb56841124893dba192138c452,
         type: 3}
@@ -2390,6 +2510,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1753441477631779494}
     m_Modifications:
+    - target: {fileID: 2834685623182265528, guid: 2cdb65b085694a349b60ff287ea68e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: Back Screws
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726131141843539314, guid: 2cdb65b085694a349b60ff287ea68e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: Bottom Front Screw
+      objectReference: {fileID: 0}
+    - target: {fileID: 6078804922216778679, guid: 2cdb65b085694a349b60ff287ea68e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: Bottom Rear Screw
+      objectReference: {fileID: 0}
     - target: {fileID: 6939121632793161368, guid: 2cdb65b085694a349b60ff287ea68e1e,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -2455,10 +2590,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7663409815138358976, guid: 2cdb65b085694a349b60ff287ea68e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: Side Rails
+      objectReference: {fileID: 0}
+    - target: {fileID: 7745458833123769568, guid: 2cdb65b085694a349b60ff287ea68e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: Front Screws
+      objectReference: {fileID: 0}
     - target: {fileID: 7977255963093305076, guid: 2cdb65b085694a349b60ff287ea68e1e,
         type: 3}
       propertyPath: m_Name
       value: Front Rail
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145553811161150915, guid: 2cdb65b085694a349b60ff287ea68e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: Top Rail
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
