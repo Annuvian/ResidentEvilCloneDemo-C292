@@ -47,12 +47,12 @@ public class Pistol_Edison : Weapon
 
         if (!canFire)
         {
-            Debug.Log("Can't Fire");
+            //Debug.Log("Can't Fire");
         }
 
         if (currentAmmo <= 0)
         {
-            Debug.Log("Out of Ammo");
+            //Debug.Log("Out of Ammo");
         }
     }
 

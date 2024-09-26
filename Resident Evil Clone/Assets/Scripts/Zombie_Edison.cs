@@ -30,7 +30,7 @@ public class Zombie_Edison : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        Debug.Log("Zombie took damage");
+        //Debug.Log("Zombie took damage");
         currentHealth -= damage;
         if (currentHealth <= 0)
         {

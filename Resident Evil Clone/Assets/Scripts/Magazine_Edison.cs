@@ -15,7 +15,7 @@ public class Magazine_Edison : MonoBehaviour, IPickupable
 
     public void OnPickup(PlayerController_Edison player)
     {
-        player.CurrentMag = this;
+        player.CurrentMag = Instantiate(this);
         Destroy(gameObject);
     }
 

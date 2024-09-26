@@ -17,6 +17,7 @@ public class PlayerController_Edison : MonoBehaviour
     private float xRotation;
     private Rigidbody rb;
 
+    [SerializeField] Transform dropPoint;
     private Magazine_Edison currentMag;
     public Magazine_Edison CurrentMag { get => currentMag; set => currentMag = value; }
 
@@ -61,9 +62,11 @@ public class PlayerController_Edison : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            Debug.Log("Drop");
             if (currentMag != null)
             {
-                currentMag.OnDrop(firePoint);
+                Debug.Log("Dropping");
+                currentMag.OnDrop(dropPoint);
                 currentMag = null;
             }
         }
