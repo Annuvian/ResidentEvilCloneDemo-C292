@@ -34,6 +34,9 @@ public class Pistol_Edison : Weapon
                 {
                     hit.transform.GetComponent<Zombie_Edison>().TakeDamage(damage);
                 }
+            }else
+            {
+                Debug.DrawRay(firePoint.position, firePoint.forward * 100, Color.red, 2f);
             }
         }
         
