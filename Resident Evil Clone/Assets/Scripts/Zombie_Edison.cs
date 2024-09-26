@@ -5,18 +5,21 @@ using UnityEngine.AI;
 
 public class Zombie_Edison : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    [SerializeField] private Transform target; //Player
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float MaxHealth = 5f;
+    [SerializeField] private float speed = 5.0f;
+    [SerializeField] private float maxHealth = 5;
 
     private float currentHealth;
-
+    // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = moveSpeed;
-        currentHealth = MaxHealth;
+        agent.speed = speed;
+
+        target = GameObject.Find("Player").transform;
+        currentHealth = maxHealth;
+
     }
 
     // Update is called once per frame
@@ -27,7 +30,7 @@ public class Zombie_Edison : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        Debug.Log("Zombie took damage: " + damage);
+        Debug.Log("Zombie took damage");
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
