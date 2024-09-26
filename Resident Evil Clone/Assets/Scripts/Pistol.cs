@@ -16,16 +16,11 @@ public class Pistol : Weapon
         
     }
 
-    protected override void Fire()
+    public override void Fire()
     {
-        //base.Fire();
+        base.Fire();
 
         // Any extra code
 
-    }
-
-    protected override void Reload()
-    {
-        //base.Reload();
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public class PlayerController : MonoBehaviour
     // Reference to the Rigidbody component on the player.
     private Rigidbody rb;
 
+    [SerializeField] Weapon currentWeapon;
+    private List<IPickupable> inventory = new List<IPickupable>();
+    [SerializeField] TextMeshProUGUI ammoText;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +49,11 @@ public class PlayerController : MonoBehaviour
         // This hides the mouse cursor. NOTE: We could add a custom mouse cursor (like a crosshair) and unhide this.
         // Alternatively, we can use a UI object for a crosshair or red dot or whatever and keep the cursor hidden.
         Cursor.visible = false;
+
+        if (currentWeapon != null)
+        {
+            ammoText.text = "Ammo: " + currentWeapon.CheckAmmo();
+        }
     }
 
     // Update is called once per frame
@@ -60,7 +71,12 @@ public class PlayerController : MonoBehaviour
         // Check to see if the left mouse click button is pressed...
         if (Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            //Shoot();
+            currentWeapon.Fire();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            AttemptReload();
         }
     }
 
@@ -145,6 +161,11 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
         }
+        else if (collision.gameObject.GetComponent<IPickupable>() != null)
+        {
+            inventory.Add(collision.gameObject.GetComponent<IPickupable>());
+            collision.gameObject.GetComponent<IPickupable>().Pickup(this);
+        }
     }
 
     // Event for collision exit.
@@ -196,6 +217,26 @@ public class PlayerController : MonoBehaviour
             {
                 // Grab the Enemy script on the Enemy we hit, and call its TakeDamage() method, passing in the damage to deal (1 in this case).
                 hit.transform.GetComponent<Enemy>().TakeDamage(1);
+            }
+        }
+    }
+
+    private void AttemptReload()
+    {
+        if (currentWeapon != null)
+        {
+            Enums.MagazineType gunMagType = currentWeapon.magazineType;
+            foreach (IPickupable item in inventory)
+            {
+                if (item is Magazine mag)
+                {
+                    if (mag.GetMagType() == gunMagType)
+                    {
+                        currentWeapon.Reload(mag);
+                        inventory.Remove(item);
+                        ammoText.text = "Ammo: " + currentWeapon.CheckAmmo();
+                    }
+                }
             }
         }
     }

@@ -1655,6 +1655,8 @@ MonoBehaviour:
   currentSpareAmmo: 19
   canFire: 1
   firePoint: {fileID: 4599693024823426338}
+  magazine: {fileID: 0}
+  magazineType: 1
 --- !u!1 &8588311622914842083
 GameObject:
   m_ObjectHideFlags: 0
