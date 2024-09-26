@@ -17,6 +17,9 @@ public class PlayerController_Edison : MonoBehaviour
     private float xRotation;
     private Rigidbody rb;
 
+    private Magazine_Edison currentMag;
+    public Magazine_Edison CurrentMag { get => currentMag; set => currentMag = value; }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,10 +36,36 @@ public class PlayerController_Edison : MonoBehaviour
         {
             Jump();
         }
-        if(Input.GetMouseButtonDown(0))
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            //Debug.Log("Shoot");
-            //Shoot(1);
+            float distance = 10f;
+            Debug.DrawRay(fpsCamera.position, fpsCamera.forward * distance, Color.green, 2f);
+            if(Physics.Raycast(fpsCamera.position, fpsCamera.forward, out RaycastHit raycasthit, distance))
+            {
+                //if (raycasthit.collider.CompareTag("Pickupable"))
+                //{
+                //    Debug.Log("Pickupable");
+                //    raycasthit.collider.GetComponent<IPickupable>().OnPickup(this);
+                //    Debug.Log(currentMag);
+                //}
+
+                if (raycasthit.transform.TryGetComponent(out Magazine_Edison magazine))
+                {
+                    Debug.Log("Magazine");
+                    magazine.OnPickup(this);
+                    Debug.Log(currentMag);
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (currentMag != null)
+            {
+                currentMag.OnDrop(firePoint);
+                currentMag = null;
+            }
         }
     }
     private void LookAround()
@@ -80,17 +109,4 @@ public class PlayerController_Edison : MonoBehaviour
             isGrounded = true;
         }
     }
-
-    //private void Shoot(float damage)
-    //{
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, 100))
-    //    {
-    //        Debug.DrawRay(firePoint.position, firePoint.forward * hit.distance, Color.red, 2f);
-    //        if (hit.transform.CompareTag("Zombie"))
-    //        {
-    //            hit.transform.GetComponent<Zombie_Edison>().TakeDamage(damage);
-    //        }
-    //    }
-    //}
 }
