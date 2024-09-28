@@ -24,17 +24,23 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = true;
     // We'll use this to store the rotation component of movement to apply later.
     private float xRotation;
-
+    
     [Header("Object References")]
     [Tooltip("A reference to the camera attached to the player for their FPS view.")]
     [SerializeField] Transform fpsCamera;
     [Tooltip("The location that our bullets/raycasts will be spawned at for shooting.")]
     [SerializeField] Transform firePoint;
+    [Tooltip("A reference to the current weapon the player has equipped.")]
+    [SerializeField] Weapon currentWeapon;
+
     // Reference to the Rigidbody component on the player.
     private Rigidbody rb;
 
-    [SerializeField] Weapon currentWeapon;
+    // We'll use this list of IPickupable to store player inventory items.
+    // Remember, one cool thing about Interfaces is that it doesn't matter what the object is (class) that the item is,
+    // if it implements IPickupable, we can hold it in this list. Pretty cool!
     private List<IPickupable> inventory = new List<IPickupable>();
+    [Tooltip("Reference to the UI object that shows how many rounds we have remaining in our weapon.")]
     [SerializeField] TextMeshProUGUI ammoText;
 
 
@@ -50,8 +56,10 @@ public class PlayerController : MonoBehaviour
         // Alternatively, we can use a UI object for a crosshair or red dot or whatever and keep the cursor hidden.
         Cursor.visible = false;
 
+        // Let's first check to see if the player actually has a weapon equipped.
         if (currentWeapon != null)
         {
+            // If they do, let's check how much ammo the current weapon has and insert that into our ammo UI object.
             ammoText.text = "Ammo: " + currentWeapon.CheckAmmo();
         }
     }
@@ -74,6 +82,7 @@ public class PlayerController : MonoBehaviour
             //Shoot();
             currentWeapon.Fire();
         }
+        // Check to see if the 'R' key is pressed to check for an attempted reload by the player.
         if (Input.GetKeyDown(KeyCode.R))
         {
             AttemptReload();
@@ -161,9 +170,15 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
         }
+        // If it wasn't the ground, let's check to see if it's anything that has a class on it that implements IPickupable.
         else if (collision.gameObject.GetComponent<IPickupable>() != null)
         {
+            // So if it is something that implements IPickupable, we are going to insert that item into our player's inventory.
+            // RECALL: We're not actually creating a new instance of this object, we're just referencing the one that exists in the world,
+            // and storing that reference in our inventory.
             inventory.Add(collision.gameObject.GetComponent<IPickupable>());
+            // After it's added to our inventory, we're going to call the Pickup() method of the thing we touched.
+            // Remember, we KNOW it has a Pickup() method, because every single class that implements IPickupable HAS to have a Pickup() method defined.
             collision.gameObject.GetComponent<IPickupable>().Pickup(this);
         }
     }
@@ -221,19 +236,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Method to call when the player tries to reload.
     private void AttemptReload()
     {
+        // First to avoid any null reference errors, let's check to be sure the player actually has a weapon equipped.
         if (currentWeapon != null)
         {
+            // We'll create a new local variable of a MagazineType from the Enums static class (recall that means we can call anything in it from anywhere globally in our codebase).
+            // We'll set the value of this new local variable to match the magazineType of the currently equipped weapon.
             Enums.MagazineType gunMagType = currentWeapon.magazineType;
+            // Let's use a foreach loop to search through every single thing in our inventory. One by one.
             foreach (IPickupable item in inventory)
             {
+                // For each item checked, we'll check to see if the current IPickupable is actually a Magazine.
+                // RECALL: Because Magazine implements IPickupable, that's how we can do this.
+                // In other words since Magazine implements IPickupable, every Magazine is also an IPickupable.
+                // NOTE: We have to give the Magazine we find a name (I chose "mag"). This is so we can then do stuff with that Magazine later.
                 if (item is Magazine mag)
                 {
+                    // So obviously if we make it here, the IPickupable we were looking at from the inventory IS a Magazine.
+                    // So we need to check to make sure that whatever type that magazine is, matches the type of the equipped weapon.
                     if (mag.GetMagType() == gunMagType)
                     {
+                        // Now that we know the magazine in the inventory is of the same type as the currentWeapon, we can reload it.
+                        // Notice we will call the Reload() method on the Weapon itself, and pass in the variable we created, which passes in
+                        // a reference to this specific magazine in the player's inventory, so now the gun knows which magazine is inserted into it.
                         currentWeapon.Reload(mag);
+                        // We then remove the magazine from our inventory. NOTE: We are not destroying the magazine.
+                        // We are simply removing it from the inventory list so that we don't keep using the same magazine over and over for subsequent reloads.
+                        // It needs to still exist in the world because remember, it's "in" the currentWeapon. If we Destroy it, then the gun has no magazine in it.
+                        // This could lead to null reference errors, or depending on how we wrote the code in the Weapon class, it might just not shoot and do nothing.
                         inventory.Remove(item);
+                        // We'll now update the current ammo UI object to display how many rounds are loaded into the currentWeapon now that it's been reloaded.
                         ammoText.text = "Ammo: " + currentWeapon.CheckAmmo();
                     }
                 }
