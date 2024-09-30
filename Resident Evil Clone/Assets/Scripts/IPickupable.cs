@@ -4,11 +4,9 @@ using UnityEngine;
 
 public interface IPickupable
 {
-    // Properties
-    // Everything is default to public
+    int AmmoCount { get; set; }
     int AmmoCapacity { get; set; }
-    int CurrentAmmo { get; set; }
     string MagType { get; set; }
     void OnPickup(PlayerController_Edison player);
-    void OnDrop(Transform transform);
+    void OnDrop();
 }
