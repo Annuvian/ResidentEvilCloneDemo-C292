@@ -11,16 +11,14 @@ public class PlayerController_Edison : MonoBehaviour
     [SerializeField] float verticalLookLimit;
     [SerializeField] Transform fpsCamera;
 
-    [SerializeField] Transform firePoint;
+    [SerializeField] Weapon_Edison currentWeapon;
 
     private bool isGrounded;
     private float xRotation;
     private Rigidbody rb;
-    private Magazine_E currentMag;
-    public Magazine_E CurrentMag { get => currentMag; set => currentMag = value; }
+    private Magazine_Edison currentMag;
 
     [SerializeField] Transform dropPoint;
-    private Magazine_Edison currentMag;
     public Magazine_Edison CurrentMag { get => currentMag; set => currentMag = value; }
 
     private void Start()
@@ -43,45 +41,27 @@ public class PlayerController_Edison : MonoBehaviour
         {
             float distance = 100f;
             Debug.DrawRay(fpsCamera.position, fpsCamera.forward * distance, Color.green, 2f);
-            if(Physics.Raycast(fpsCamera.position,fpsCamera.forward, out RaycastHit hit, distance))
+            if (Physics.Raycast(fpsCamera.position, fpsCamera.forward, out RaycastHit hit, distance))
             {
-                if(hit.transform.TryGetComponent(out Magazine_E magazine)){
-                    Debug.Log("Magazine");
-                    magazine.OnPickup(this);
-                    Debug.Log(currentMag);
-                }
-            }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            float distance = 10f;
-            Debug.DrawRay(fpsCamera.position, fpsCamera.forward * distance, Color.green, 2f);
-            if(Physics.Raycast(fpsCamera.position, fpsCamera.forward, out RaycastHit raycasthit, distance))
-            {
-                //if (raycasthit.collider.CompareTag("Pickupable"))
-                //{
-                //    Debug.Log("Pickupable");
-                //    raycasthit.collider.GetComponent<IPickupable>().OnPickup(this);
-                //    Debug.Log(currentMag);
-                //}
-
-                if (raycasthit.transform.TryGetComponent(out Magazine_Edison magazine))
+                if (hit.transform.TryGetComponent(out Magazine_Edison magazine))
                 {
                     Debug.Log("Magazine");
                     magazine.OnPickup(this);
                     Debug.Log(currentMag);
+
+                    currentWeapon.Magazine = currentMag;
                 }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log("Drop");
-            if (currentMag != null)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                Debug.Log("Dropping");
-                currentMag.OnDrop(dropPoint);
-                currentMag = null;
+                Debug.Log("Drop");
+                if (currentMag != null)
+                {
+                    Debug.Log("Dropping");
+                    currentMag.OnDrop(dropPoint);
+                    currentMag = null;
+                }
             }
         }
     }

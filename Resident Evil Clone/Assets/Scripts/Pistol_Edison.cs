@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol_Edison : Weapon
+public class Pistol_Edison : Weapon_Edison
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        canFire = true;
-        ammoCapacity = 10;
-        currentAmmo = ammoCapacity;
+        base.Start();
     }
-
-    // Update is called once per frame
 
     protected override void Update()
     {
@@ -21,26 +16,29 @@ public class Pistol_Edison : Weapon
 
     protected override void Fire()
     {
-        if (currentAmmo > 0 && canFire)
+        if (magazine == null)
         {
-            //Debug.Log("Pistol Fired");
-            currentAmmo--;
+            Debug.Log("No Magazine");
+            return;
+        }
+
+        if (magazine.AmmoCount > 0 && canFire)
+        {
+            Debug.Log("Pistol Fired");
+            magazine.AmmoCount--;
 
             RaycastHit hit;
-            Debug.DrawRay(firePoint.position, firePoint.forward * 100, Color.red, 2f);
-            if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, 100))
+            Debug.DrawRay(fpsCamera.position, fpsCamera.forward * 100, Color.red, 2f);
+            if (Physics.Raycast(fpsCamera.position, fpsCamera.forward, out hit, 100))
             {
                 if (hit.transform.CompareTag("Zombie"))
                 {
                     hit.transform.GetComponent<Zombie_Edison>().TakeDamage(damage);
                 }
-            }else
-            {
-                Debug.DrawRay(firePoint.position, firePoint.forward * 100, Color.red, 2f);
             }
         }
         
-        if(currentAmmo <= 0)
+        if(magazine.AmmoCount <= 0)
         {
             Reload();
         }
@@ -50,7 +48,7 @@ public class Pistol_Edison : Weapon
             //Debug.Log("Can't Fire");
         }
 
-        if (currentAmmo <= 0)
+        if (magazine.AmmoCount <= 0)
         {
             //Debug.Log("Out of Ammo");
         }
@@ -58,7 +56,14 @@ public class Pistol_Edison : Weapon
 
     protected override void Reload()
     {
-        StartCoroutine(ReloadCoroutine());
+        if(magazine != null)
+        {
+            StartCoroutine(ReloadCoroutine());
+        }
+        else
+        {
+            Debug.Log("No Magazine");
+        }
     }
 
     private IEnumerator ReloadCoroutine()
@@ -70,6 +75,6 @@ public class Pistol_Edison : Weapon
 
         Debug.Log("Reloading Complete");
         canFire = true;
-        currentAmmo = ammoCapacity;
+        magazine.Reload();
     }
 }

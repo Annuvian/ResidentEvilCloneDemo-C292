@@ -4,31 +4,36 @@ using UnityEngine;
 
 public class Magazine_Edison : MonoBehaviour, IPickupable
 {
-    [SerializeField] private GameObject magPrefab;
+    [SerializeField] private int ammoCount;
+    [SerializeField] private int ammoReloadAmount;
     [SerializeField] private int ammoCapacity;
-    [SerializeField] private int currentAmmo;
     [SerializeField] private string magType;
 
+    public int AmmoCount { get => ammoCount; set => ammoCount = value; }
     public int AmmoCapacity { get => ammoCapacity; set => ammoCapacity = value; }
-    public int CurrentAmmo { get => currentAmmo; set =>  currentAmmo = value; }
     public string MagType { get => magType; set => magType = value; }
 
     public void OnPickup(PlayerController_Edison player)
     {
-        player.CurrentMag = Instantiate(this);
-        Destroy(gameObject);
+        player.CurrentMag = this;
+        gameObject.SetActive(false);
+        gameObject.transform.SetParent(player.transform);
+
+        //gameObject.transform.parent = player.transform;
     }
 
     public void OnDrop(Transform transform)
     {
-        GameObject mag = Instantiate(magPrefab, transform.position, transform.rotation);
+        gameObject.SetActive(true);
+        gameObject.transform.SetParent(null);
+
+        //gameObject.transform.parent = null;
     }
 
-    private void OnTriggerStay(Collider other)
+    public void Reload()
     {
-        if (other.CompareTag("Player"))
-        {
-            //UI
-        }
+        ammoCapacity -= ammoReloadAmount;
+        ammoCount = ammoReloadAmount;
     }
+
 }

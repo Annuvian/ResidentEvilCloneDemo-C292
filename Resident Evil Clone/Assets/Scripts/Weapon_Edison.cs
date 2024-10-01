@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+public abstract class Weapon_Edison : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] protected int ammoCapacity;
-    [SerializeField] protected int currentAmmo;
+    [SerializeField] protected Transform fpsCamera;
+
+    [SerializeField] protected Magazine_Edison magazine;
     [SerializeField] protected float fireRate;
     [SerializeField] protected bool canFire;
 
-    [SerializeField] protected Transform firePoint;
     [SerializeField] protected float damage;
-
     [SerializeField] protected float reloadTime;
+    public Magazine_Edison Magazine { get => magazine; set => magazine = value; }
+
+    protected virtual void Start()
+    {
+        canFire = true;
+    }
+
     protected virtual void Update()
     {
         if (Input.GetButtonDown("Fire1"))
