@@ -268,9 +268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd1392719c0b494ca4f6fb9002a935d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magPrefab: {fileID: 25465564}
   ammoCount: 10
-  ammoCapacity: 10
+  reloadAmount: 10
+  ammoCapacity: 30
   magType: 
 --- !u!1001 &82434893
 PrefabInstance:
@@ -660,8 +660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9488fe0c876590542b3f308c9b14230e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoCapacity: 10
-  currentAmmo: 0
+  currentMag: {fileID: 0}
   fireRate: 0
   canFire: 0
   firePoint: {fileID: 317570742}
@@ -1479,6 +1478,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &910231458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910231459}
+  m_Layer: 0
+  m_Name: DropPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &910231459
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910231458}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1034092954}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &911299199
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1873,6 +1903,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1992929885}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8aa57ef8509b7054283a8ef322a851ad,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 910231459}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8aa57ef8509b7054283a8ef322a851ad,
         type: 3}
@@ -1911,6 +1945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecfb790b2c15d9f4f94a5e2820e653e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropPoint: {fileID: 910231459}
+  weapon: {fileID: 317570743}
   moveSpeed: 10
   jumpForce: 5
   mouseSensity: 500
