@@ -32,6 +32,7 @@ public class Zombie_Edison : MonoBehaviour
     {
         Debug.Log("Zombie took damage");
         currentHealth -= damage;
+        AudioManager_Edison.instance.PlayOneShot(AudioManager_Edison.instance.zombieDamage);
         if (currentHealth <= 0)
         {
             Destroy(gameObject);
