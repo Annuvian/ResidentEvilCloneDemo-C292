@@ -269,6 +269,7 @@ public class PlayerController : MonoBehaviour
                         inventory.Remove(item);
                         // We'll now update the current ammo UI object to display how many rounds are loaded into the currentWeapon now that it's been reloaded.
                         ammoText.text = "Ammo: " + currentWeapon.CheckAmmo();
+                        return;
                     }
                 }
             }

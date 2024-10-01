@@ -26,14 +26,14 @@ public abstract class Weapon : MonoBehaviour
     // We'll use this to store a reference to the UI object that displays ammo remaining.
     // Notice that even though the UI object is of the type TextMeshProUGUI,
     // I want to make this a GameObject so we can take advantage of the GameObject.FindWithTag() method in Start().
-    private GameObject ammoText;
+    [SerializeField] TextMeshProUGUI ammoText;
 
     // Start is called before the first frame update
     void Start()
     {
         // When this weapon spawns into the world it will search the entire scene for any
         // object with the tag "AmmoText" and store a reference to it in the ammoText field.
-        ammoText = GameObject.FindWithTag("AmmoText");
+        //ammoText = GameObject.FindGameObjectWithTag("AmmoText");
     }
 
     // Update is called once per frame
@@ -98,7 +98,7 @@ public abstract class Weapon : MonoBehaviour
                 // This removed round is essentially the round that will be fired.
                 magazine.RemoveRound();
                 // Update the current ammo in the weapon.
-                ammoText.GetComponent<TextMeshProUGUI>().text = "Ammo: " + CheckAmmo();
+                ammoText.text = "Ammo: " + CheckAmmo();
                 // Container to store raycast hit data.
                 RaycastHit hit;
                 // Fire a raycast out from the firePoint in the forward direction. We then store the data. It has a range of 500m.
