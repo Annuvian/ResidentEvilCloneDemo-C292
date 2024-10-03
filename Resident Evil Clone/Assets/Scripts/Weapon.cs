@@ -24,8 +24,6 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected Magazine magazine;
 
     // We'll use this to store a reference to the UI object that displays ammo remaining.
-    // Notice that even though the UI object is of the type TextMeshProUGUI,
-    // I want to make this a GameObject so we can take advantage of the GameObject.FindWithTag() method in Start().
     [SerializeField] TextMeshProUGUI ammoText;
 
     // Start is called before the first frame update
