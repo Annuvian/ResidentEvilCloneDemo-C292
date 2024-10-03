@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
     // Reference to the AudioSource component.
     private AudioSource audioSource;
     // We'll use this field to store a reference to our lightbulb that will have color controlled by our door.
-    [SerializeField] GameObject lightBulb;
+    [SerializeField] DoorLight doorLight;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,10 @@ public class Door : MonoBehaviour
     public void TurnLightGreen()
     {
         // Access the Light component on the lightBulb GameObject and set the color property to green.
-        lightBulb.GetComponent<Light>().color = Color.green;
+        //lightBulb.GetComponent<Light>().color = Color.green;
+
+        // Call the SetColor() method on the doorLight which is inthe DoorLight script, and tell it to turn green.
+        doorLight.SetColor(Color.green);
     }
 
     // This method will make the attached light red.
@@ -39,7 +42,10 @@ public class Door : MonoBehaviour
     private void TurnLightRed()
     {
         // Access the Light component on the lightBulb and set the color field to green.
-        lightBulb.GetComponent<Light>().color = Color.red;
+        //lightBulb.GetComponent<Light>().color = Color.red;
+
+        // Call the SetColor() method on the doorLight which is inthe DoorLight script, and tell it to turn green.
+        doorLight.SetColor(Color.red);
     }
 
     // We'll use this method to trigger a sound effect for the door opening.
