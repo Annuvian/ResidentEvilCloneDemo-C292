@@ -14,10 +14,14 @@ public class Magazine : MonoBehaviour, IPickupable
     [Tooltip("The type of weapon this magazine is for.")]
     [SerializeField] Enums.MagazineType magazineType;
 
+    // Used to get a reference to the context text.
+    private ContextualText contextText;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Search for and find the contextText object.
+        contextText = GameObject.FindGameObjectWithTag("ContextText").GetComponent<ContextualText>();
     }
 
     // Update is called once per frame
@@ -55,6 +59,7 @@ public class Magazine : MonoBehaviour, IPickupable
         // We don't destroy the object because we still want to be able to reference it in the player's inventory so we can use it.
         gameObject.SetActive(false);
         Debug.Log("Magazine picked up!");
+        contextText.UpdateText("Magazine picked up!");
     }
 
     // Returns the number of currently loaded rounds.
