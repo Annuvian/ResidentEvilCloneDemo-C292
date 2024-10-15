@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController_Edison : MonoBehaviour
 {
+    [SerializeField] Transform dropPoint;
+    [SerializeField] Weapon weapon;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float mouseSensitivity = 60f;
@@ -63,6 +65,10 @@ public class PlayerController_Edison : MonoBehaviour
                     currentMag = null;
                 }
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q)){
+            currentMag.OnDrop(dropPoint);
         }
     }
     private void LookAround()
