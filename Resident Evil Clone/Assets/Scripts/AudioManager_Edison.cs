@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class AudioManager_Edison : MonoBehaviour
 {
+    public static AudioManager_Edison instance;
 
     [SerializeField] AudioSource audioSource;
-    [SerializeField] private AudioClip[] audioClips;
 
-    [SerializeField] public AudioClip zombieDamage;
-
-    public static AudioManager_Edison instance;
+    [SerializeField] public AudioClip[] zombieDamage;
+    [SerializeField] public AudioClip rayGun;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
         if (instance == null)
         {
             instance = this;
@@ -27,11 +27,24 @@ public class AudioManager_Edison : MonoBehaviour
 
     void Start()
     {
-        audioSource.PlayOneShot(audioClips[Random.Range(0, audioClips.Length)]); // Play random audio clip on start
+        // audioSource.PlayOneShot(audioClips[Random.Range(0, audioClips.Length)]); // Play random audio clip on start
     }
 
+    /// <summary>
+    /// Play a single audio clip
+    /// </summary>
+    /// <param name="audioClip"></param>
     public void PlayOneShot(AudioClip audioClip)
     {
         audioSource.PlayOneShot(audioClip);
+    }
+
+    /// <summary>
+    /// Plays a random audio clip from an array of audio clips
+    /// </summary>
+    /// <param name="audioClipArray"></param>
+    public void PlayRandomOneShot(AudioClip[] audioClipArray)
+    {
+        audioSource.PlayOneShot(audioClipArray[Random.Range(0, audioClipArray.Length)]);
     }
 }

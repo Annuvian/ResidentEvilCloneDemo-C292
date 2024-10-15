@@ -27,6 +27,7 @@ public class Pistol_Edison : Weapon
         if (currentMag.AmmoCount > 0 && canFire)
         {
             //Debug.Log("Pistol Fired");
+            AudioManager_Edison.instance.PlayOneShot(AudioManager_Edison.instance.rayGun);
             currentMag.AmmoCount--;
 
             RaycastHit hit;
