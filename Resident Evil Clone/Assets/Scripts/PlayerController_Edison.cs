@@ -33,6 +33,7 @@ public class PlayerController_Edison : MonoBehaviour
     //One way to create an event
     public delegate void onPlayerDeath();
     public static event onPlayerDeath OnPlayerDeath;
+    public static onPlayerDeath OnPlayerDeath2;
 
     //Another way to create an event
     public static event Action<int,int> OnDamaged;

@@ -50,6 +50,8 @@ public class Zombie_Edison : MonoBehaviour
             Vector3 direction = transform.position - player.transform.position;
 
             player.GetComponent<PlayerController_Edison>().Damage(1, direction.normalized, 500);
+
+            //PlayerController_Edison.OnPlayerDeath2();
         }
     }
 }
