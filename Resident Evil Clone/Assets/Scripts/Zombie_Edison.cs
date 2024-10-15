@@ -9,6 +9,7 @@ public class Zombie_Edison : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float maxHealth = 5;
+    [SerializeField] private int scoreValue = 10;
 
     private float currentHealth;
     // Start is called before the first frame update
@@ -19,7 +20,6 @@ public class Zombie_Edison : MonoBehaviour
 
         target = GameObject.Find("Player").transform;
         currentHealth = maxHealth;
-
     }
 
     // Update is called once per frame
@@ -35,7 +35,21 @@ public class Zombie_Edison : MonoBehaviour
         AudioManager_Edison.instance.PlayRandomOneShot(AudioManager_Edison.instance.zombieDamage);
         if (currentHealth <= 0)
         {
+            //Invoke takes in the parameter of the unity event
+            MyEvents_Edison.AddPoints.Invoke(scoreValue);
             Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            GameObject player = collision.gameObject;
+
+            Vector3 direction = transform.position - player.transform.position;
+
+            player.GetComponent<PlayerController_Edison>().Damage(1, direction.normalized, 500);
         }
     }
 }

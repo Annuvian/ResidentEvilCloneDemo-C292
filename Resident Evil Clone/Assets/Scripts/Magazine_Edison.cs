@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Magazine_Edison : MonoBehaviour, IPickupable
+public class Magazine_Edison : MonoBehaviour, IPickupable_Edison
 {
     [SerializeField] private int ammoCount;
     [SerializeField] private int reloadAmount;

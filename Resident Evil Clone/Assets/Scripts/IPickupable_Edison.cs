@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPickupable
+public interface IPickupable_Edison
 {
     int AmmoCount { get; set; }
     int AmmoCapacity { get; set; }

@@ -1,41 +1,65 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController_Edison : MonoBehaviour
 {
-    [SerializeField] Transform dropPoint;
+    [SerializeField] private Transform dropPoint;
 
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float jumpForce = 5f;
-    [SerializeField] float mouseSensitivity = 60f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float mouseSensitivity = 60f;
 
-    [SerializeField] float verticalLookLimit;
-    [SerializeField] Transform fpsCamera;
-    [SerializeField] Weapon_Edison currentWeapon;
+    [SerializeField] private float verticalLookLimit;
+    [SerializeField] private Transform fpsCamera;
+    [SerializeField] private Weapon_Edison currentWeapon;
+
+    [SerializeField] private int maxHealth;
+    private int currentHealth;
+    private bool isKnockedBack = false;
 
     private bool isGrounded;
     private float xRotation;
     private Rigidbody rb;
     private Magazine_Edison currentMag;
+
+    public bool IsKnockedBack { get => isKnockedBack; set => isKnockedBack = value; }
     public Magazine_Edison CurrentMag { get => currentMag; set => currentMag = value; }
+
+    private bool debug = false;
+
+    //One way to create an event
+    public delegate void onPlayerDeath();
+    public static event onPlayerDeath OnPlayerDeath;
+
+    //Another way to create an event
+    public static event Action<int,int> OnDamaged;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        currentHealth = maxHealth;
+        OnDamaged?.Invoke(currentHealth,maxHealth);
     }
 
     private void Update()
     {
-        Move();
+        if (!isKnockedBack) {
+            Move();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump();
+            }
+        }
+
         LookAround();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             float distance = 100f;
@@ -51,21 +75,17 @@ public class PlayerController_Edison : MonoBehaviour
                     currentWeapon.Magazine = currentMag;
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                Debug.Log("Drop");
-                if (currentMag != null)
-                {
-                    Debug.Log("Dropping");
-                    currentMag.OnDrop(dropPoint);
-                    currentMag = null;
-                }
-            }
         }
 
-        if(Input.GetKeyDown(KeyCode.Q)){
-            currentMag.OnDrop(dropPoint);
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("Drop");
+            if (currentMag != null)
+            {
+                Debug.Log("Dropping");
+                currentMag.OnDrop(dropPoint);
+                currentMag = null;
+            }
         }
     }
     private void LookAround()
@@ -82,6 +102,17 @@ public class PlayerController_Edison : MonoBehaviour
 
     private void Move()
     {
+        if (isKnockedBack && !debug)
+        {
+            Debug.Log("Knocked Back");
+            debug = true;
+
+        }else if (isKnockedBack == false && debug)
+        {
+            Debug.Log("Knock Backed Stopped");
+            debug = false;
+        }
+
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
@@ -108,5 +139,43 @@ public class PlayerController_Edison : MonoBehaviour
         {
             isGrounded = true;
         }
+    }
+
+    /// <summary>
+    /// Damages the player
+    /// </summary>
+    /// <param name="damageAmount"> The amount of damage being dealt to the player</param>
+    /// <param name="direction"> The direction of knockback, usually the normal to the zombie</param>
+    public void Damage(int damageAmount, Vector3 direction, float knockbackPower)
+    {
+        if(currentHealth - damageAmount <= 0)
+        {
+            Debug.Log("Player is dead");
+
+            currentHealth = 0;
+            OnPlayerDeath?.Invoke();
+            return;
+        }
+
+        currentHealth -= damageAmount;
+
+        rb.velocity = direction * knockbackPower;
+        StartCoroutine(Knockback(direction, knockbackPower, 1f));
+
+        Debug.Log(rb.velocity);
+
+        OnDamaged?.Invoke(currentHealth,maxHealth);
+
+        Debug.Log("Player took damage");
+    }
+
+    private IEnumerator Knockback(Vector3 direction, float knockbackPower, float time)
+    {
+        isKnockedBack = true;
+        rb.AddForce(direction * knockbackPower, ForceMode.Impulse);
+        Debug.Log(rb.velocity);
+
+        yield return new WaitForSeconds(time);
+        isKnockedBack = false;
     }
 }
