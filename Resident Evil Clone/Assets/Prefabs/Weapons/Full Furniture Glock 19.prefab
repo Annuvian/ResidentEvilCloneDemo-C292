@@ -1654,9 +1654,11 @@ MonoBehaviour:
   currentLoadedAmmo: 15
   currentSpareAmmo: 19
   canFire: 1
+  magazineType: 1
   firePoint: {fileID: 4599693024823426338}
   magazine: {fileID: 0}
-  magazineType: 1
+  muzzleFlash: {fileID: 0}
+  ammoText: {fileID: 0}
 --- !u!1 &8588311622914842083
 GameObject:
   m_ObjectHideFlags: 0

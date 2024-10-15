@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Zombie
   - AmmoText
+  - ContextText
   layers:
   - Default
   - TransparentFX
