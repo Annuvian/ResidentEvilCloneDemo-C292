@@ -15,6 +15,11 @@ public class ContextualText : MonoBehaviour
     // This is used to keep track of the fading coroutine to see if it's currently running or not.
     private Coroutine fadeCoroutine;
 
+    void Start()
+    {
+        MyEvents.PickedUpItem.AddListener(UpdateText);
+    }
+
     // This coroutine will handle displaying, and then fading out the text.
     IEnumerator FadeOutText()
     {
