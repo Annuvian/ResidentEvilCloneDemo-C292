@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,8 @@ public class Zombie_Edison : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float maxHealth = 5;
-
+    [SerializeField] private int score = 10;
+    public Action<int> zombieDeath;
     private float currentHealth;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +21,6 @@ public class Zombie_Edison : MonoBehaviour
 
         target = GameObject.Find("Player").transform;
         currentHealth = maxHealth;
-
     }
 
     // Update is called once per frame
