@@ -5,35 +5,40 @@ using UnityEngine;
 public class Magazine_Edison : MonoBehaviour, IPickupable
 {
     [SerializeField] private int ammoCount;
-    [SerializeField] private int ammoReloadAmount;
+    [SerializeField] private int reloadAmount;
     [SerializeField] private int ammoCapacity;
     [SerializeField] private string magType;
-
     public int AmmoCount { get => ammoCount; set => ammoCount = value; }
     public int AmmoCapacity { get => ammoCapacity; set => ammoCapacity = value; }
     public string MagType { get => magType; set => magType = value; }
+    public int ReloadAmount {get => reloadAmount; set => reloadAmount = value;}
+
+    public void OnDrop(Transform position)
+    {
+        gameObject.SetActive(true);
+        transform.position = position.position;
+
+        if(gameObject.transform.parent.gameObject.TryGetComponent(out PlayerController_Edison playerController))
+        {
+            playerController.CurrentMag = null;
+        }
+        
+        gameObject.transform.parent = null;
+
+        //gameObject.transform.SetParent(null);
+    }
 
     public void OnPickup(PlayerController_Edison player)
     {
         player.CurrentMag = this;
         gameObject.SetActive(false);
-        gameObject.transform.SetParent(player.transform);
-
-        //gameObject.transform.parent = player.transform;
+        gameObject.transform.parent = player.transform;
     }
 
-    public void OnDrop(Transform transform)
-    {
-        gameObject.SetActive(true);
-        gameObject.transform.SetParent(null);
-
-        //gameObject.transform.parent = null;
+    public void Reload(){
+        if(ammoCapacity > 0){
+            ammoCount = reloadAmount;
+            ammoCapacity -= reloadAmount;
+        }
     }
-
-    public void Reload()
-    {
-        ammoCapacity -= ammoReloadAmount;
-        ammoCount = ammoReloadAmount;
-    }
-
 }

@@ -5,22 +5,19 @@ using UnityEngine;
 public class PlayerController_Edison : MonoBehaviour
 {
     [SerializeField] Transform dropPoint;
-    [SerializeField] Weapon weapon;
+
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float mouseSensitivity = 60f;
 
     [SerializeField] float verticalLookLimit;
     [SerializeField] Transform fpsCamera;
-
     [SerializeField] Weapon_Edison currentWeapon;
 
     private bool isGrounded;
     private float xRotation;
     private Rigidbody rb;
     private Magazine_Edison currentMag;
-
-    [SerializeField] Transform dropPoint;
     public Magazine_Edison CurrentMag { get => currentMag; set => currentMag = value; }
 
     private void Start()
