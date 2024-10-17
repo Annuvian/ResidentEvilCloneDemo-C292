@@ -11,8 +11,10 @@ public class Zombie_Edison : MonoBehaviour
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float maxHealth = 5;
     [SerializeField] private int score = 10;
-    public Action<int> zombieDeath;
+
+    public static event Action<int> OnZombieDie;
     private float currentHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,8 @@ public class Zombie_Edison : MonoBehaviour
 
         target = GameObject.Find("Player").transform;
         currentHealth = maxHealth;
+
+        OnZombieDie += UIManager_Edison.intstance.UpdateScore;
     }
 
     // Update is called once per frame
@@ -36,7 +40,13 @@ public class Zombie_Edison : MonoBehaviour
         AudioManager_Edison.instance.PlayRandomOneShot(AudioManager_Edison.instance.zombieDamage);
         if (currentHealth <= 0)
         {
+            OnZombieDie?.Invoke(score);
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        OnZombieDie -= UIManager_Edison.intstance.UpdateScore;
     }
 }
