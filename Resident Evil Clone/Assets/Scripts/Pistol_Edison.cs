@@ -8,8 +8,6 @@ public class Pistol_Edison : Weapon
     void Start()
     {
         canFire = true;
-        ammoCapacity = 10;
-        currentAmmo = ammoCapacity;
     }
 
     // Update is called once per frame
@@ -21,10 +19,16 @@ public class Pistol_Edison : Weapon
 
     protected override void Fire()
     {
-        if (currentAmmo > 0 && canFire)
+        if(currentMag == null){
+            Debug.Log("No mag");
+            return;
+        }
+
+        if (currentMag.AmmoCount > 0 && canFire)
         {
             //Debug.Log("Pistol Fired");
-            currentAmmo--;
+            AudioManager_Edison.instance.PlayOneShot(AudioManager_Edison.instance.rayGun);
+            currentMag.AmmoCount--;
 
             RaycastHit hit;
             Debug.DrawRay(firePoint.position, firePoint.forward * 100, Color.red, 2f);
@@ -37,7 +41,7 @@ public class Pistol_Edison : Weapon
             }
         }
         
-        if(currentAmmo <= 0)
+        if(currentMag.AmmoCount <= 0)
         {
             Reload();
         }
@@ -47,7 +51,7 @@ public class Pistol_Edison : Weapon
             Debug.Log("Can't Fire");
         }
 
-        if (currentAmmo <= 0)
+        if (currentMag.AmmoCount <= 0)
         {
             Debug.Log("Out of Ammo");
         }
@@ -67,6 +71,7 @@ public class Pistol_Edison : Weapon
 
         Debug.Log("Reloading Complete");
         canFire = true;
-        currentAmmo = ammoCapacity;
+        //currentAmmo = ammoCapacity;
+        currentMag.Reload();
     }
 }

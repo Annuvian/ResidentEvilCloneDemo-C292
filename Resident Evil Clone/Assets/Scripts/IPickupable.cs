@@ -8,5 +8,5 @@ public interface IPickupable
     int AmmoCapacity { get; set; }
     string MagType { get; set; }
     void OnPickup(PlayerController_Edison player);
-    void OnDrop();
+    void OnDrop(Transform position);
 }
