@@ -27,6 +27,8 @@ public class PlayerController_Edison : MonoBehaviour
 
     public bool IsKnockedBack { get => isKnockedBack; set => isKnockedBack = value; }
     public Magazine_Edison CurrentMag { get => currentMag; set => currentMag = value; }
+    public int CurrentHealth { get => currentHealth; set => currentHealth = value; }
+    public int MaxHealth { get => maxHealth; set => maxHealth = value; }
 
     private bool debug = false;
 

@@ -838,8 +838,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Resident Evil Clone
-  metroPackageVersion: 
+  metroPackageName: ResidentEvilClone
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -847,7 +847,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Resident Evil Clone
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Resident Evil Clone
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

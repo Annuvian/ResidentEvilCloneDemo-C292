@@ -14,7 +14,18 @@ public class UIManager_Edison : MonoBehaviour
     public static UIManager_Edison intstance;
 
     private int globalScore = 0;
+    private int topScore = 0;
     public int GlobalScore { get { return globalScore; } }
+    public int TopScore { 
+        get { return topScore; }
+
+        set { 
+            if(value > topScore)
+            {
+                topScore = value;
+            }
+        }
+    }
 
     // public delegate void OnZombieDie(int score);
     // public static OnZombieDie zombieDeath;
@@ -79,7 +90,7 @@ public class UIManager_Edison : MonoBehaviour
         PlayerController_Edison.OnDamaged -= UpdateHealth;
     }
 
-    private void UpdateHealth(int currentHealth, int maxHealth)
+    public void UpdateHealth(int currentHealth, int maxHealth)
     {
         healthTxt.text = "Health: " + currentHealth + "/" + maxHealth;
     }

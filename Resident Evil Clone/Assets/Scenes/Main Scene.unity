@@ -1148,6 +1148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 475417651}
   - component: {fileID: 475417652}
+  - component: {fileID: 475417653}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -1185,6 +1186,18 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1940484593}
   scoreTxt: {fileID: 0}
   healthTxt: {fileID: 0}
+--- !u!114 &475417653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475417650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074c359a119e427408b6ad31bdea55d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &483142710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1593,7 +1606,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8aa57ef8509b7054283a8ef322a851ad,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8aa57ef8509b7054283a8ef322a851ad,
         type: 3}
