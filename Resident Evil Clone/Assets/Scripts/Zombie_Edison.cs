@@ -14,6 +14,8 @@ public class Zombie_Edison : MonoBehaviour
     public static event Action<int> OnZombieDie;
     private float currentHealth;
 
+    private int scoreValue = 10;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,8 +41,11 @@ public class Zombie_Edison : MonoBehaviour
         if (currentHealth <= 0)
         {
             //Invoke takes in the parameter of the unity event
-            MyEvents_Edison.AddPoints.Invoke(scoreValue);
-            OnZombieDie?.Invoke(score);
+
+            //Either or is fine
+            //MyEvents_Edison.AddPoints.Invoke(scoreValue);
+            OnZombieDie?.Invoke(scoreValue);
+
             Destroy(gameObject);
         }
     }
