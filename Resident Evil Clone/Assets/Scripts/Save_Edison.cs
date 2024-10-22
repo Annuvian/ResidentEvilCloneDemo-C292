@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Save_Edison : MonoBehaviour
 {
+    //Get a reference to the player controller
     private PlayerController_Edison playerController;
 
     private void Awake()
     {
+        //Find the player controller in the scene
         playerController = FindObjectOfType<PlayerController_Edison>();
     }
 
     private void Update()
     {
+        //Handle saving and loading data
         if (Input.GetKeyDown(KeyCode.F5) && Input.GetKey(KeyCode.LeftShift))
         {
             SaveData();
@@ -24,7 +27,9 @@ public class Save_Edison : MonoBehaviour
             Debug.Log("Data Loaded");
         }
     }
-
+    /// <summary>
+    /// Save the player's data
+    /// </summary>
     public void SaveData()
     {
         //PlayerPrefs.SetInt("topScore", UIManager_Edison.intstance.GlobalScore);
@@ -32,6 +37,9 @@ public class Save_Edison : MonoBehaviour
         PlayerPrefs.SetInt("currentHealth", playerController.CurrentHealth);
     }
 
+    /// <summary>
+    /// Load the player's data
+    /// </summary>
     public void LoadData()
     {
         try
