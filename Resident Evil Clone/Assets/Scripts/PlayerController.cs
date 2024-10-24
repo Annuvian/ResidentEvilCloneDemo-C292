@@ -43,10 +43,14 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Reference to the UI object that shows how many rounds we have remaining in our weapon.")]
     [SerializeField] TextMeshProUGUI ammoText;
 
+    [SerializeField] List<Magazine> magazinePrefabs = new List<Magazine>();
+
 
     // Start is called before the first frame update
     void Start()
     {
+        LoadPlayerData();
+
         // Initialize the rb field with the value of the Rigidbody component on the player.
         rb = GetComponent<Rigidbody>();
 
@@ -86,6 +90,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             AttemptReload();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            SavePlayerData();
         }
     }
 
@@ -294,4 +303,58 @@ public class PlayerController : MonoBehaviour
        bullet.GetComponent<Rigidbody>().AddForce(firePoint.forward * 10, ForceMode.Impulse);
     }
     */
+
+    public void SavePlayerData()
+    {
+        PlayerData data = new PlayerData();
+
+        data.magazines = new List<Magazine.MagazineData>();
+        foreach (IPickupable item in inventory)
+        {
+            if (item is Magazine mag)
+            {
+                Magazine.MagazineData magData = new Magazine.MagazineData();
+                magData.magName = mag.magName;
+                magData.currentCount = mag.GetRounds();
+
+                data.magazines.Add(magData);
+            }
+        }
+
+        string json = JsonUtility.ToJson(data, true);
+        System.IO.File.WriteAllText(Application.persistentDataPath + "/playerData.json", json);
+
+        Debug.Log("Data saved: " + json);
+    }
+
+    public void LoadPlayerData()
+    {
+        string path = Application.persistentDataPath + "/playerData.json";
+        if (System.IO.File.Exists(path))
+        {
+            string json = System.IO.File.ReadAllText(path);
+            PlayerData data = JsonUtility.FromJson<PlayerData>(json);
+
+            inventory.Clear();
+            foreach (Magazine.MagazineData magData in data.magazines)
+            {
+                Magazine newMag = Instantiate(magazinePrefabs[magData.magName], transform.position, Quaternion.identity);
+                newMag.gameObject.SetActive(false);
+                newMag.currentCount = magData.currentCount;
+
+                inventory.Add(newMag);
+            }
+            Debug.Log("Data loaded!");
+        }
+        else
+        {
+            Debug.Log("No save file found");
+        }
+    }
+}
+
+[System.Serializable]
+public class PlayerData
+{
+    public List<Magazine.MagazineData> magazines;
 }

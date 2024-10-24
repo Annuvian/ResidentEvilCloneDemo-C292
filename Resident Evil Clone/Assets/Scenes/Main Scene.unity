@@ -2284,6 +2284,8 @@ MonoBehaviour:
   firePoint: {fileID: 1300806688}
   currentWeapon: {fileID: 1263645983}
   ammoText: {fileID: 185658501}
+  magazinePrefabs:
+  - {fileID: 6901992942798623092, guid: b9ba43bb56841124893dba192138c452, type: 3}
 --- !u!4 &660137658 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7748231073453852746, guid: 79cfb6bdbfaf59443b8186a06cf8a4ef,

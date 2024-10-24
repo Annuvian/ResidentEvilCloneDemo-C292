@@ -7,12 +7,13 @@ public class Magazine : MonoBehaviour, IPickupable
     // Notice that our Magazine class inherits from MonoBehaviour AND implements IPickupable.
     // In C# you can only have a class inherit from one other class, but it can implement as many interfaces as you'd like.
     [Header("Magazine Specs")]
+    public int magName;
     [Tooltip("The maximum number of rounds this magazine can hold.")]
-    [SerializeField] int maxCapacity;
+    [SerializeField] public int maxCapacity;
     [Tooltip("The current number of rounds loaded into this magazine.")]
-    [SerializeField] int currentCount;
+    [SerializeField] public int currentCount;
     [Tooltip("The type of weapon this magazine is for.")]
-    [SerializeField] Enums.MagazineType magazineType;
+    [SerializeField] public Enums.MagazineType magazineType;
 
     // Used to get a reference to the context text.
     //private ContextualText contextText;
@@ -67,5 +68,12 @@ public class Magazine : MonoBehaviour, IPickupable
     public int GetRounds()
     {
         return currentCount;
+    }
+
+    [System.Serializable]
+    public class MagazineData
+    {
+        public int magName;
+        public int currentCount;
     }
 }
