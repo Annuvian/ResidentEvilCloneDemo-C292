@@ -17,6 +17,9 @@ public class ContextualText : MonoBehaviour
 
     void Start()
     {
+        // This is how we listen for events. Specifically, we are listening for the PickedUpItem event that is defined in the MyEvents class.
+        // We're using the AddListener() method for the event which is what says, "This class is listening for this event to be fired.".
+        // The argument for AddListener is the name of the method that will be called when this class "hears" the event being fired off.
         MyEvents.PickedUpItem.AddListener(UpdateText);
     }
 

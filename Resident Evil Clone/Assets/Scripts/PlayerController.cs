@@ -43,6 +43,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Reference to the UI object that shows how many rounds we have remaining in our weapon.")]
     [SerializeField] TextMeshProUGUI ammoText;
 
+    // We're very sloppily using this as a list of Magazines so that when we load our saved game, we have a list of prefabs to spawn magazines from to add to our inventory.
+    // Remember our inventory is using direct references to objects that exist inside the game world, so, if we load a saved game and had magazines in our inventory,
+    // we need to be able to instantiate copies of those same types of magazines. That's what this is used for, a list of all magazine prefabs so we can spawn in new magazines.
     [SerializeField] List<Magazine> magazinePrefabs = new List<Magazine>();
 
 
@@ -304,57 +307,120 @@ public class PlayerController : MonoBehaviour
     }
     */
 
+    // Our method for saving the player's inventory. Note that we're using the JSON file format.
     public void SavePlayerData()
     {
+        // First we need to create a new instance of our PlayerData object that we define below later in in this script file.
         PlayerData data = new PlayerData();
 
+        // The PlayerData class has a field for magazines which is a list.
+        // Like any list, we need to actually create the list, so we'll do that now.
+        // NOTE that the list consists of not Magazines, but a list of the MagazineData object which is defined inside the Magazine class.
         data.magazines = new List<Magazine.MagazineData>();
+
+        // Now we will go through each object in our player's inventory...
         foreach (IPickupable item in inventory)
         {
+            // If the current item we're checking is of the Magazine type, we'll save a temporary reference to it stored in the name "mag".
             if (item is Magazine mag)
             {
+                // Next, we need to instantiate a new instance of a MagazineData object.
                 Magazine.MagazineData magData = new Magazine.MagazineData();
+                // Now, we need to insert data from our magazine in our inventory into this new object we just created.
+                // First we will make sure the name of our new MagazineData object matches the name of the magazine in the inventory.
                 magData.magName = mag.magName;
+                // Next, we will call the GetRounds() method on the magazine in our inventory, we'll take the result of this and set the currentCount of the MagazineData to match the value.
                 magData.currentCount = mag.GetRounds();
 
+                // Finally, we will now add this magazine to the list of magazines in PlayerData.
+                // Remember, PlayerData is the object we're actually saving. It consists of only one thing: A list of MagazineData objects.
+                // All the other code above was creating and setting values for the MagazineData objects we were creating, but saving them actually requires us to add them to this list
+                // since the list is what's in the thing that's actually being saved (the PlayerData object).
                 data.magazines.Add(magData);
             }
         }
 
+        // Now that all of our MagazineData objects have been created and added to the list in our PlayerData,
+        // we need to create our JSON data, which is just a big string of key value pairs which also features nesting.
+        // We'll define a new string called json (it can be called anything), and we'll use the ToJson() method inside the JsonUtility class.
+        // The first argument we're passing is the actual data to be saved (our PlayerData object), and the second optional argument makes the file easier to read by adding new lines and whitespace.
         string json = JsonUtility.ToJson(data, true);
+        // We now need to actually save this file to the player's local machine.
+        // We are going to use the WriteAllText() method from the File class that's part of the System.IO namespace.
+        // The first argument we're passing is the file path.
+        // NOTE: We're using Application.persistentDataPath which will place this in: C -> Users -> Admin (or whatever the username is) -> Local Low -> DefaultCompanyName (or whatever your company name is set to in Unity)...
+        // Application.persistentDataPath will always put this in this location. We're then simply adding on the actual name of the file which is the playerData.json part.
+        // And finally, as the second argument, we're specifying the actual data to save there, which is the json string we created before using the ToJson() method from the JsonUtility class.
         System.IO.File.WriteAllText(Application.persistentDataPath + "/playerData.json", json);
 
+        // Let's go ahead and add a Debug.Log() to double check the data saved, if we select this message in the console we can actually see the JSON string of the saved data!
         Debug.Log("Data saved: " + json);
     }
 
+    // We'll use this method to load the JSON data from the player's local machine and then interact with the data to alter the state of our game.
+    // In this case, we're simply going to put any magazines the player had in their inventory, into their inventory.
+    // REMEMBER: Everytime we load our game, the player starts with no magazines in their inventory.
+    // For us to be able to give the player the magazines they had in their last saved play session, we have to actually create the magazines and put them in their inventory.
     public void LoadPlayerData()
     {
+        // Let's start with creating the path of our saved file and saving it in a string.
+        // Notice we're just setting the path to be that same location we used for saving plus the file name we used when saving our game.
         string path = Application.persistentDataPath + "/playerData.json";
+
+        // Next, let's check to make sure this file actually exists. We're going to use the Exists() method from the File class of the System.IO namespace.
+        // This is just going to look on the player's computer to see if the specfied file exists at the specified path. We already saved the path + file name in our path string.
         if (System.IO.File.Exists(path))
         {
+            // If the file does exist in that location, we will first read ALL the data from that file. We'll do this using the ReadAllText() method from the File class.
+            // This will take ALL the data from this file and save it in the json string we are defining here.
             string json = System.IO.File.ReadAllText(path);
+            // Our text is still all just a messy long string with no usuable format or way of telling what data is what. We could parse through it all but there's a much easier way...
+            // Let's use the FromJson() method of JsonUtility to automatically parse through the string and extract the JSON data.
+            // Notice that we're also telling the FromJson method that the thing stored here is a PlayerData. This is essential in helping it know what data it's supposed to contain,
+            // and this is what allows us to actually create an instance of PlayerData directly using the FromJson. It will create a new PlayerData instance,
+            // go through all the data in the string, extract each individual piece of data, and store them in the correct fields in our new PlayerData object for us for use later.
             PlayerData data = JsonUtility.FromJson<PlayerData>(json);
 
+            // Let's go ahead and clear the player's inventory, just in case there's something in here. Remember, if this was a fresh game, this wouldn't ever get called
+            // since it's only being called if the save file actually exists.
             inventory.Clear();
+
+            // Now let's go through every single item in the magazines list in our PlayerData that we extracted from the save file...
             foreach (Magazine.MagazineData magData in data.magazines)
             {
+                // For each and every single magazine in the list, we are going to instantiate a new magazine.
+                // Remember, we're using the magName field (which is just an int) to know what magazine prefab it needs to spawn into the world.
+                // The list of prefabs are sloppily stored at the top of the PlayerController script that we're currently in.
+                // Ideally you'd have some other empty GameObject somewhere with a "MagazineFactory" script on it that has the sole purpose of spawning magazines into the world.
                 Magazine newMag = Instantiate(magazinePrefabs[magData.magName], transform.position, Quaternion.identity);
+                // As soon as we spawn the magazine into the world, we are going to make it invisible. This is the same thing that happens when the player picks up a magazine inside the game world.
+                // We need to make it inactive so they can't pick it up or see it or move it around or whatever. It's supposed to be IN their inventory.
                 newMag.gameObject.SetActive(false);
+                // Now, we will make sure the currentCount of ammo remaining in this new magazine matches what was stored in the save file for this magazine.
                 newMag.currentCount = magData.currentCount;
 
+                // Finally, we will add this magazine that we spawned into the world into the player's inventory.
                 inventory.Add(newMag);
             }
+            // Let's just add this here to make sure we know the data loaded successfully.
             Debug.Log("Data loaded!");
         }
+        // If the file we specified does not exist...
         else
         {
+            // Show a message in the console letting us know that no save file was found.
             Debug.Log("No save file found");
         }
     }
 }
 
+// This is a new class we're defining to store the player's inventory data.
+// Notice that as of now it's only storing one thing: A list of information about magazines.
+// It's important to note it's not storing actual magazines. We can't store Unity objects or Prefabs in a save file. We can however store as much data as we want about anything.
+// So we are going to just save all the important information about a magazine so that we can spawn the correct one later and update its values to match the saved state.
 [System.Serializable]
 public class PlayerData
 {
+    // Our PlayerData just consists of a simple list of MagazineData objects which are defined in the Magazine class.
     public List<Magazine.MagazineData> magazines;
 }

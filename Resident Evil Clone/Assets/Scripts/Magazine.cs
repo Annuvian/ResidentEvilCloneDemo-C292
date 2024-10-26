@@ -7,6 +7,7 @@ public class Magazine : MonoBehaviour, IPickupable
     // Notice that our Magazine class inherits from MonoBehaviour AND implements IPickupable.
     // In C# you can only have a class inherit from one other class, but it can implement as many interfaces as you'd like.
     [Header("Magazine Specs")]
+    [Tooltip("Used to store which magazine this is in an array of different magazine prefabs. Used for inventory management and item spawning on loading a saved game.")]
     public int magName;
     [Tooltip("The maximum number of rounds this magazine can hold.")]
     [SerializeField] public int maxCapacity;
@@ -61,6 +62,8 @@ public class Magazine : MonoBehaviour, IPickupable
         gameObject.SetActive(false);
         Debug.Log("Magazine picked up!");
         //contextText.UpdateText("Magazine picked up!");
+        // Here we are using the Invoke() method for the PickedUpItem event in the MyEvents class.
+        // This will fire off the event and any other class listening for it will "hear" it and respond according to how we've coded it to respond to the event being "heard".
         MyEvents.PickedUpItem.Invoke("Magazine picked up!");
     }
 
@@ -70,9 +73,14 @@ public class Magazine : MonoBehaviour, IPickupable
         return currentCount;
     }
 
+    // New class used to save data about a magazine.
+    // NOTE: The [System.Serializable] attribute allows this to be saved to disk or a database outside of Unity.
     [System.Serializable]
     public class MagazineData
     {
+        // These are simply the data that this MagazineData class will hold.
+        // Think of the MagazineData class just as an object. And the magName and currentCount are specific pieces of data that are stored inside this object.
+        // The object itself is what is being saved. And the data contained inside it are the fields.
         public int magName;
         public int currentCount;
     }

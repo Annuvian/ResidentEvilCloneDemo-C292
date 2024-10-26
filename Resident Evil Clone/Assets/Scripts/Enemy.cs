@@ -55,6 +55,9 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0)
         {
             // Destroy the enemy.
+            // This is how we trigger an event.
+            // We're specifically triggering the ZombieKilled event from the MyEvents class by calling the Invoke() method on the event.
+            // Any class that has been set up to listen to this event will "hear" it being fired off and respond according to what we have told it to do in response.
             MyEvents.ZombieKilled.Invoke();
             Destroy(gameObject);
         }
