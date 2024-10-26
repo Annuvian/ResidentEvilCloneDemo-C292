@@ -95,9 +95,23 @@ public class PlayerController : MonoBehaviour
             AttemptReload();
         }
 
+        // TEMPORARY
+        // Temporary and crappy way to save our game data by pressing the "I" key. Ideally you'd want some pause menu with a Save button or something.
+        // Or maybe even implement some type of auto-save system at specific checkpoints or time intervals.
         if (Input.GetKeyDown(KeyCode.I))
         {
             SavePlayerData();
+        }
+
+        // Pressing F toggles the weapon's attached flashlight.
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            // Check to make sure a weapon is actually equipped.
+            if (currentWeapon != null)
+            {
+                // Attempt to toggle the light.
+                currentWeapon.ToggleFlashlight();
+            }
         }
     }
 

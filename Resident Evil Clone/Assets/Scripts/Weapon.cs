@@ -23,6 +23,10 @@ public abstract class Weapon : MonoBehaviour
     [Tooltip("The magazine currently loaded in this weapon.")]
     [SerializeField] protected Magazine magazine;
 
+    [Header("Attachments")]
+    [Tooltip("Flashlight attachment.")]
+    [SerializeField] Light flashLight;
+
     // We'll use this to store a reference to the UI object that displays ammo remaining.
     [SerializeField] TextMeshProUGUI ammoText;
 
@@ -117,6 +121,17 @@ public abstract class Weapon : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    // Method to toggle the attached gun's flashlight on and off.
+    public virtual void ToggleFlashlight()
+    {
+        // First make sure there actually is a flashlight attachment.
+        if (flashLight != null)
+        {
+            // Set the value of enabled to the opposite of what it currently is now.
+            flashLight.enabled = !flashLight.enabled;
         }
     }
 }

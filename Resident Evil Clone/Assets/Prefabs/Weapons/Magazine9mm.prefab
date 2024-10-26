@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2147719458138981576}
   - component: {fileID: 4523979963405845915}
   - component: {fileID: 3257170527673630204}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Magazine9mm.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 6901992942798623092}
   - component: {fileID: 1613379077110889510}
   - component: {fileID: 2769531850289982272}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Magazine9mm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e3e8b45b87fe34282cfd35c9adc8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  magName: 0
   maxCapacity: 15
   currentCount: 15
   magazineType: 1
@@ -246,7 +247,7 @@ GameObject:
   - component: {fileID: 3458528374377694565}
   - component: {fileID: 948628626612350010}
   - component: {fileID: 7971016128605688628}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Magazine9mm.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +330,7 @@ GameObject:
   - component: {fileID: 3136141953715357477}
   - component: {fileID: 8397824474731739652}
   - component: {fileID: 4320169819106993595}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Magazine9mm.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
