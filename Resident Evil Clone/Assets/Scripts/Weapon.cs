@@ -20,6 +20,8 @@ public abstract class Weapon : MonoBehaviour
     [Header("Object References")]
     [Tooltip("The point where the bullet spawns at.")]
     [SerializeField] protected Transform firePoint;
+    [Tooltip("The light for the muzzle flash.")]
+    [SerializeField] protected Light muzzleFlash;
     [Tooltip("The magazine currently loaded in this weapon.")]
     [SerializeField] protected Magazine magazine;
 
@@ -30,12 +32,19 @@ public abstract class Weapon : MonoBehaviour
     // We'll use this to store a reference to the UI object that displays ammo remaining.
     [SerializeField] TextMeshProUGUI ammoText;
 
+    // References
+    // Reference to the Animator component on this weapon.
+    protected Animator animator;
+
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         // When this weapon spawns into the world it will search the entire scene for any
         // object with the tag "AmmoText" and store a reference to it in the ammoText field.
         //ammoText = GameObject.FindGameObjectWithTag("AmmoText");
+
+        // Find and link up the Animator reference.
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -99,6 +108,8 @@ public abstract class Weapon : MonoBehaviour
                 // We will remove a round from the loaded magazine by calling the RemoveRound() method.
                 // This removed round is essentially the round that will be fired.
                 magazine.RemoveRound();
+                // Play the weapon firing animation.
+                animator.SetTrigger("Fire");
                 // Update the current ammo in the weapon.
                 ammoText.text = "Ammo: " + CheckAmmo();
                 // Container to store raycast hit data.
@@ -133,5 +144,17 @@ public abstract class Weapon : MonoBehaviour
             // Set the value of enabled to the opposite of what it currently is now.
             flashLight.enabled = !flashLight.enabled;
         }
+    }
+
+    public virtual void MuzzleFlash()
+    {
+        IEnumerator LightFlash()
+        {
+            muzzleFlash.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            muzzleFlash.enabled = false;
+        }
+
+        StartCoroutine(LightFlash());
     }
 }
