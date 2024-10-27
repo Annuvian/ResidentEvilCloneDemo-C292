@@ -24,6 +24,10 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected Light muzzleFlash;
     [Tooltip("The magazine currently loaded in this weapon.")]
     [SerializeField] protected Magazine magazine;
+    [Tooltip("The particle effect for a hit.")]
+    [SerializeField] protected GameObject hitMist;
+    [Tooltip("An array of potential blood spatter to display.")]
+    [SerializeField] protected GameObject[] bloodSpatterPrefabs;
 
     [Header("Attachments")]
     [Tooltip("Flashlight attachment.")]
@@ -129,6 +133,14 @@ public abstract class Weapon : MonoBehaviour
                     {
                         // Grab the Enemy script on the Enemy we hit, and call its TakeDamage() method, passing in the damage to deal (1 in this case).
                         hit.transform.GetComponent<Enemy>().TakeDamage(1);
+                        // Spawn the particle effect for a round striking a zombie at the point of bullet impact.
+                        Instantiate(hitMist, hit.point, Quaternion.identity);
+                        // Generate a random number to use as the index of what blood spatter pattern should be spawned.
+                        int rand = Random.Range(0, bloodSpatterPrefabs.Length);
+                        // Spawn the blood spatter decal at the impact point.
+                        GameObject spatter = Instantiate(bloodSpatterPrefabs[rand], hit.point, Quaternion.identity);
+                        // Make sure the spatter is facing in the direction the bullet was traveling.
+                        spatter.transform.forward = hit.point - transform.position;
                     }
                 }
             }
