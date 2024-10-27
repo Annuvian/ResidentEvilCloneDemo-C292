@@ -82,6 +82,10 @@ public abstract class Weapon : MonoBehaviour
             }
         }
         */
+
+        // Play the reload animation.
+        animator.SetTrigger("Reload");
+        Debug.Log("Playing reload animation.");
     }
 
     // This will simply return how many current rounds are loaded into the magazine that in the gun currently.
@@ -112,8 +116,21 @@ public abstract class Weapon : MonoBehaviour
                 // We will remove a round from the loaded magazine by calling the RemoveRound() method.
                 // This removed round is essentially the round that will be fired.
                 magazine.RemoveRound();
-                // Play the weapon firing animation.
-                animator.SetTrigger("Fire");
+
+                // Check to see if we fired the last round and play the right animation.
+                if (magazine.GetRounds() == 0)
+                {
+                    // Play the last round hold open animation.
+                    animator.SetTrigger("Empty");
+                    Debug.Log("Holding open chamber.");
+                }
+                else
+                {
+                    // Play the normal weapon firing animation.
+                    animator.SetTrigger("Fire");
+                    Debug.Log("Playing normal firing animation.");
+                }
+                
                 // Update the current ammo in the weapon.
                 ammoText.text = "Ammo: " + CheckAmmo();
                 // Container to store raycast hit data.
@@ -133,8 +150,10 @@ public abstract class Weapon : MonoBehaviour
                     {
                         // Grab the Enemy script on the Enemy we hit, and call its TakeDamage() method, passing in the damage to deal (1 in this case).
                         hit.transform.GetComponent<Enemy>().TakeDamage(1);
-                        // Spawn the particle effect for a round striking a zombie at the point of bullet impact.
-                        Instantiate(hitMist, hit.point, Quaternion.identity);
+                        // Spawn the particle effect for a round striking a zombie at the point of bullet impact plus 0.5m behind the point of impact in the direction of bullet travel.
+                        GameObject mist = Instantiate(hitMist, hit.point + ((hit.point - transform.position).normalized * 0.5f), Quaternion.identity);
+                        // Rotate the mist.
+                        mist.transform.forward = hit.point - transform.position;
                         // Generate a random number to use as the index of what blood spatter pattern should be spawned.
                         int rand = Random.Range(0, bloodSpatterPrefabs.Length);
                         // Spawn the blood spatter decal at the impact point.
@@ -158,15 +177,21 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
+    // Method to display a muzzle flash upon firing.
     public virtual void MuzzleFlash()
     {
+        // Define a coroutine for the firing.
         IEnumerator LightFlash()
         {
+            // Turn on the light.
             muzzleFlash.enabled = true;
+            // Wait for 0.1 seconds.
             yield return new WaitForSeconds(0.1f);
+            // Turn the light off.
             muzzleFlash.enabled = false;
         }
 
+        // Start the coroutine to trigger the light flash on and off.
         StartCoroutine(LightFlash());
     }
 }

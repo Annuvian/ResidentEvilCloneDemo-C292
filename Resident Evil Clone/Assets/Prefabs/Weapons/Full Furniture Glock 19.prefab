@@ -1899,14 +1899,11 @@ MonoBehaviour:
   hitMist: {fileID: 827721785688405192, guid: 2845044bbd4599c4b8fd7de0e134e0c0, type: 3}
   bloodSpatterPrefabs:
   - {fileID: 4540831800438196437, guid: a24ffc40a4532b94b8b7ec058d64dc7d, type: 3}
-  - {fileID: 4540831800438196437, guid: 07f3eb27ea55f0a41a5d480428a5dff1, type: 3}
   - {fileID: 4540831800438196437, guid: c71569928cbf986488303cf75db9c0ff, type: 3}
   - {fileID: 4540831800438196437, guid: 70bdc685e4c412f40afe6b45124f17f3, type: 3}
   - {fileID: 4540831800438196437, guid: cb13c0bcc699f4246a9cbfca0bed1b2b, type: 3}
-  - {fileID: 4540831800438196437, guid: 18407d396c4b69541acee041f64c94d9, type: 3}
   - {fileID: 4540831800438196437, guid: 8dce7effee286ac419fd1fdd2fbae0ee, type: 3}
   - {fileID: 4540831800438196437, guid: 9e44af32e9d693e429c3a3c56955891b, type: 3}
-  - {fileID: 4540831800438196437, guid: caeb168b109c6434aa5fa002f653974b, type: 3}
   flashLight: {fileID: 4615214673368158905}
   ammoText: {fileID: 0}
 --- !u!95 &4814895700375607729

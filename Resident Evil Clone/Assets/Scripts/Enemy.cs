@@ -10,13 +10,14 @@ public class Enemy : MonoBehaviour
     // For a description of the Tooltip attribute, see the PlayerController class.
     [Tooltip("The move speed of the enemy in meters per second.")]
     [SerializeField] float moveSpeed = 5f;
-    [Tooltip("The maximum health this enemy can have.")]
-    [SerializeField] float MaxHealth = 5f;
     // The current health of the enemy.
     private float currentHealth;
 
     // How strong bullets knock the zombies back.
     [SerializeField] float knockBackForce;
+
+    // Keeps track if zombie is dead or not.
+    private bool isDead;
     
 
     [Header("Object References")]
@@ -32,8 +33,9 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Set the current hp of the enemy to match the max hp.
-        currentHealth = MaxHealth;
+        // Randomize starting health.
+        int rand = Random.Range(4, 7);
+        currentHealth = rand;
         // Initialize the agent field with the NavMeshAgent component on this enemy.
         agent = GetComponent<NavMeshAgent>();
         // Initialize the animator field with the Animator on the Enemy.
@@ -82,7 +84,7 @@ public class Enemy : MonoBehaviour
         // Subtract the damage dealt from the enemy health.
         currentHealth -= damage;
         // Check to see if the health of the enemy is less than or equal to 0.
-        if (currentHealth == 0)
+        if (currentHealth <= 0 && !isDead)
         {
             // Destroy the enemy.
             // This is how we trigger an event.
@@ -96,21 +98,26 @@ public class Enemy : MonoBehaviour
             if (animator.GetCurrentAnimatorStateInfo(0).IsTag("crawling"))
             {
                 animator.SetTrigger("Permadie");
+                isDead = true;
             }
             else
             {
                 if (rand == 0)
                 {
                     animator.SetTrigger("Permadie");
+                    isDead = true;
                 }
                 else
                 {
                     animator.SetTrigger("Backdie");
+                    isDead = true;
                 }
             }
 
             // Stop the zombie from moving.
             agent.speed = 0;
+            // Freeze all rigidbody movement so the player can't kick the zombie around on the floor or whatever.
+            rb.isKinematic = true;
         }
         else if (currentHealth > 1)
         {
